@@ -119,7 +119,7 @@ Goodbye! 👋
 
 #### 2. LLM-Powered Interactive Client
 
-Use natural language queries with AI (OpenAI GPT or Anthropic Claude). The LLM client automatically understands your questions, selects the right tools, and provides conversational responses.
+Use natural language queries with AI (OpenAI GPT, Anthropic Claude, or AWS Bedrock). The LLM client automatically understands your questions, selects the right tools, and provides conversational responses.
 
 **Prerequisites:**
 
@@ -130,6 +130,7 @@ Edit `requirements.txt` and uncomment the LLM provider you want to use:
 # Uncomment one of these:
 openai>=1.0.0              # For OpenAI GPT integration
 # anthropic>=0.18.0        # For Anthropic Claude integration
+# boto3>=1.28.0            # For AWS Bedrock integration
 ```
 
 Then install:
@@ -141,7 +142,9 @@ Or install directly:
 ```bash
 pip install openai           # For OpenAI
 # or
-pip install anthropic        # For Claude
+pip install anthropic        # For Anthropic Claude
+# or
+pip install boto3            # For AWS Bedrock
 ```
 
 2. **Set up API credentials:**
@@ -156,6 +159,23 @@ export LLM_PROVIDER=openai  # Optional, this is the default
 ```bash
 export ANTHROPIC_API_KEY='sk-ant-your-key-here'
 export LLM_PROVIDER=anthropic
+```
+
+**For AWS Bedrock:**
+```bash
+export AWS_ACCESS_KEY_ID='your-access-key'
+export AWS_SECRET_ACCESS_KEY='your-secret-key'
+export AWS_REGION='us-east-1'  # Optional, defaults to us-east-1
+export LLM_PROVIDER=bedrock
+
+# Optional: Specify a different Bedrock model
+export BEDROCK_MODEL_ID='anthropic.claude-3-5-sonnet-20241022-v2:0'
+```
+
+Or use AWS CLI configuration:
+```bash
+aws configure
+export LLM_PROVIDER=bedrock
 ```
 
 3. **Run the client:**

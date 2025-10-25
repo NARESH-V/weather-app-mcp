@@ -25,5 +25,6 @@ python-dotenv>=1.0.0
 # Optional: LLM integration for interactive client
 # Uncomment the ones you need:
 openai>=1.0.0              # For OpenAI GPT integration
-# anthropic>=0.18.0          # For Anthropic Claude integration
+# anthropic>=0.18.0        # For Anthropic Claude integration
+boto3>=1.28.0            # For AWS Bedrock integration
 
