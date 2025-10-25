@@ -1,6 +1,6 @@
 # Weather MCP Application
 
-A complete implementation of the **Model Context Protocol (MCP)** with Python 3, featuring separate server and client modules for weather data interaction.
+A complete implementation of the **Model Context Protocol (MCP)** with Python 3, featuring separate server and client modules for weather data interaction, including interactive CLI and LLM-powered clients.
 
 ## 🌟 What is MCP?
 
@@ -14,23 +14,28 @@ The Model Context Protocol (MCP) is an open standard developed by Anthropic for 
 
 ```
 weather-app-mcp/
-├── server/                  # MCP Server Module
+├── server/                       # MCP Server Module
 │   ├── __init__.py
-│   └── mcp_server.py       # Weather server implementation
-├── client/                  # MCP Client Module
+│   └── mcp_server.py            # Weather server implementation
+├── client/                       # MCP Client Module
 │   ├── __init__.py
-│   └── mcp_client.py       # Weather client implementation
-├── examples/                # Example scripts
-│   ├── run_server.py       # Run server standalone
-│   ├── run_client.py       # Run client demo
-│   └── custom_client.py    # Custom client examples
-├── tests/                   # Test suite
+│   ├── mcp_client.py            # Core MCP client implementation
+│   ├── interactive_client.py    # Simple interactive CLI
+│   └── llm_interactive_client.py # LLM-powered interactive client
+├── examples/                     # Example scripts
+│   ├── run_server.py            # Run server standalone
+│   ├── run_client.py            # Run client demo
+│   └── custom_client.py         # Custom client examples
+├── tests/                        # Test suite
 │   ├── test_server.py
 │   ├── test_client.py
 │   └── test_integration.py
-├── requirements.txt         # Python dependencies
+├── requirements.txt              # Python dependencies
+├── pyproject.toml                # Package configuration
 ├── .gitignore
-└── README.md               # This file
+├── INTERACTIVE_GUIDE.md          # Interactive clients usage guide
+├── INTERACTIVE_CLIENTS_SUMMARY.md # Technical details
+└── README.md                     # This file
 ```
 
 ## 🚀 Getting Started
@@ -42,7 +47,7 @@ weather-app-mcp/
 
 ### Installation
 
-1. **Clone the repository**:
+1. **Clone the repository** (or navigate to your project directory):
 ```bash
 cd weather-app-mcp
 ```
@@ -60,206 +65,107 @@ pip install -r requirements.txt
 
 ## 💻 Usage
 
-### Running the Server
+### 🎯 Interactive Clients
 
-The MCP server exposes weather data through resources, tools, and prompts.
+The project includes **two interactive clients** that accept user queries and respond in real-time:
 
-```bash
-# Run the server directly
-python server/mcp_server.py
+#### 1. Simple Interactive CLI Client
 
-# Or use the example script
-python examples/run_server.py
-```
-
-The server provides:
-- **4 Resources**: Weather data for New York, London, Tokyo, and Paris
-- **3 Tools**: 
-  - `get_current_weather` - Get weather for a specific city
-  - `compare_weather` - Compare weather between two cities
-  - `get_temperature_summary` - Get temperature statistics across all cities
-- **2 Prompts**:
-  - `weather_report` - Generate a weather report
-  - `travel_weather_advice` - Get travel advice based on weather
-
-### Running the Client
-
-The MCP client connects to the server and demonstrates all available operations.
+A command-line interface for querying weather data with simple commands:
 
 ```bash
-# Run the full demo
-python client/mcp_client.py
-
-# Or use the example script
-python examples/run_client.py
-
-# Or run custom examples
-python examples/custom_client.py
+python client/interactive_client.py
 ```
 
-The client demonstration shows:
-1. Listing all available resources
-2. Reading specific resource data
-3. Listing available tools
-4. Calling tools with various arguments
-5. Listing available prompts
-6. Using prompt templates
+**Available commands:**
+- `weather <city>` - Get current weather for a city
+- `compare <city1> <city2>` - Compare weather between two cities
+- `summary` - Get temperature summary for all cities
+- `resource <city>` - Read raw weather resource data (JSON)
+- `list` - Show all available cities
+- `help` - Show help message
+- `quit` or `exit` - Exit the client
 
-## 🏗️ Architecture
+**Available cities**: `new_york`, `london`, `tokyo`, `paris`
 
-### Server Module (`server/`)
+**Example session:**
+```
+weather> weather london
+Current weather in London:
+Temperature: 58°F
+Conditions: Rainy
+Humidity: 80%
+Wind Speed: 15 mph
 
-The server implements the MCP specification using the official MCP SDK:
+weather> compare new_york tokyo
+Weather Comparison:
 
-- **Resources**: Exposes weather data via URIs like `weather://new_york`
-- **Tools**: Provides callable functions for weather operations
-- **Prompts**: Defines reusable templates for weather queries
-- **Transport**: Uses stdio for communication (JSON-RPC over stdin/stdout)
+New York: 72°F, Partly Cloudy
+Tokyo: 68°F, Clear
 
-Key features:
-- Async/await architecture for efficient I/O
-- Comprehensive logging
-- Clean separation of concerns
-- Easily extensible for new cities or features
+Temperature difference: 4°F (New York is warmer)
 
-### Client Module (`client/`)
+weather> summary
+Temperature Summary Across All Cities:
 
-The client connects to MCP servers and provides a clean API:
+Average Temperature: 65.0°F
+Hottest: New York at 72°F
+Coldest: London at 58°F
+Range: 14°F
 
-- **Session Management**: Handles connection lifecycle
-- **Resource Operations**: List and read resources
-- **Tool Invocation**: Call tools with type-safe arguments
-- **Prompt Handling**: Retrieve and use prompt templates
-- **Error Handling**: Graceful error management
-
-## 🔧 Development
-
-### Running Tests
-
-```bash
-# Install test dependencies
-pip install pytest pytest-asyncio
-
-# Run all tests
-pytest tests/ -v
-
-# Run specific test file
-pytest tests/test_server.py -v
-
-# Run with coverage
-pytest tests/ --cov=server --cov=client
+weather> quit
+Goodbye! 👋
 ```
 
-### Adding New Weather Cities
+#### 2. LLM-Powered Interactive Client
 
-Edit `server/mcp_server.py` and add to the `weather_data` dictionary:
+Use natural language queries with AI (OpenAI GPT or Anthropic Claude). The LLM client automatically understands your questions, selects the right tools, and provides conversational responses.
 
+**Prerequisites:**
+
+1. **Install LLM dependencies:**
+
+Edit `requirements.txt` and uncomment the LLM provider you want to use:
 ```python
-self.weather_data["berlin"] = {
-    "city": "Berlin",
-    "temperature": 55,
-    "conditions": "Cloudy",
-    "humidity": 75,
-    "wind_speed": 14
-}
+# Uncomment one of these:
+openai>=1.0.0              # For OpenAI GPT integration
+# anthropic>=0.18.0        # For Anthropic Claude integration
 ```
 
-### Creating New Tools
-
-Add a new tool in the `handle_list_tools` function:
-
-```python
-Tool(
-    name="your_tool_name",
-    description="What your tool does",
-    inputSchema={
-        "type": "object",
-        "properties": {
-            "param1": {"type": "string", "description": "Parameter description"}
-        },
-        "required": ["param1"]
-    }
-)
+Then install:
+```bash
+pip install -r requirements.txt
 ```
 
-Then implement it in the `handle_call_tool` function.
+Or install directly:
+```bash
+pip install openai           # For OpenAI
+# or
+pip install anthropic        # For Claude
+```
 
-## 📚 MCP Concepts
+2. **Set up API credentials:**
 
-### Resources
-Resources are data sources that clients can read. In this example:
-- `weather://new_york` - Weather data for New York
-- `weather://london` - Weather data for London
-- etc.
+**For OpenAI:**
+```bash
+export OPENAI_API_KEY='sk-your-key-here'
+export LLM_PROVIDER=openai  # Optional, this is the default
+```
 
-### Tools
-Tools are executable functions. Our server provides:
-- **get_current_weather**: Fetch current weather for a city
-- **compare_weather**: Compare conditions between two cities
-- **get_temperature_summary**: Get aggregate temperature statistics
+**For Anthropic Claude:**
+```bash
+export ANTHROPIC_API_KEY='sk-ant-your-key-here'
+export LLM_PROVIDER=anthropic
+```
 
-### Prompts
-Prompts are reusable templates for AI interactions:
-- **weather_report**: Template for generating weather reports
-- **travel_weather_advice**: Template for travel planning
+3. **Run the client:**
+```bash
+python client/llm_interactive_client.py
+```
 
-## 🌐 Real-World Applications
+**Example natural language queries:**
+```
+You: What's the weather like in London?
 
-This example can be extended for:
-- **Real Weather APIs**: Connect to OpenWeather, WeatherAPI, etc.
-- **Database Integration**: Store historical weather data
-- **AI Assistant Integration**: Use with Claude, GPT, or other LLMs
-- **Business Intelligence**: Weather analytics for decision-making
-- **IoT Integration**: Connect with weather stations
-
-## 🔒 Security Considerations
-
-When deploying to production:
-- Use authentication for MCP connections
-- Validate all inputs thoroughly
-- Implement rate limiting
-- Use secure transport (HTTPS/TLS)
-- Don't expose sensitive data through resources
-- Implement proper error handling without leaking information
-
-## 📖 Additional Resources
-
-- [MCP Official Documentation](https://docs.anthropic.com/en/docs/agents-and-tools/mcp)
-- [MCP GitHub Repository](https://github.com/modelcontextprotocol)
-- [MCP Specification](https://spec.modelcontextprotocol.io/)
-- [Anthropic Blog Post](https://www.anthropic.com/news/model-context-protocol)
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to:
-- Add new weather data sources
-- Implement additional tools
-- Create more prompt templates
-- Improve documentation
-- Add tests
-- Fix bugs
-
-## 📝 License
-
-This project is open source and available under the MIT License.
-
-## 🙋 Support
-
-If you have questions or run into issues:
-1. Check the examples in the `examples/` directory
-2. Review the test files in `tests/` for usage patterns
-3. Read the inline documentation in the code
-4. Refer to the official MCP documentation
-
-## 🎯 Next Steps
-
-To learn more about MCP:
-1. Run the examples and observe the output
-2. Modify the server to add your own data
-3. Create custom tools for your use case
-4. Experiment with different prompt templates
-5. Integrate with an AI model like Claude
-
----
-
-**Happy coding! 🌤️**
+🤔 Thinking...
+🤖 Calling tool: get_current_weather with args: {'city': 'london'}
