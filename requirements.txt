@@ -1,0 +1,24 @@
+# MCP Server and Client Requirements
+
+# MCP SDK
+mcp>=1.0.0
+
+# HTTP server support
+aiohttp>=3.9.0
+uvicorn>=0.25.0
+fastapi>=0.108.0
+
+# JSON-RPC support
+jsonrpcclient>=4.0.0
+jsonrpcserver>=5.0.0
+
+# For async operations
+asyncio-mqtt>=0.16.1
+httpx>=0.26.0
+
+# Data validation
+pydantic>=2.5.0
+
+# Logging
+python-dotenv>=1.0.0
+
