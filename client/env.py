@@ -9,7 +9,7 @@ LLM_PROVIDER='bedrock' # openai, anthropic, bedrock
 # ------------------------------------------------------------------------------------------------
 OPENAI_API_KEY="YOURE_API_KEY_HERE"
 ANTHROPIC_API_KEY="YOURE_API_KEY_HERE"
-BEDROCK_MODEL_ID='anthropic.claude-3-5-sonnet-20241022-v2:0'  # Claude 3.5 Sonnet v2
+BEDROCK_MODEL_ID='claude_3_5_sonnet_v2'  # Claude 3.5 Sonnet v2
 
 
 # ------------------------------------------------------------------------------------------------
