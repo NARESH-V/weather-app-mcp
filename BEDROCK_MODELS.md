@@ -5,8 +5,7 @@ This document lists all available foundation models in AWS Bedrock (us-east-1 re
 ## 🔥 Recommended Text Models
 
 ### Amazon Nova Models (Your Current Choice)
-- **`amazon.nova-micro-v1:0`** ⭐ (You're using this)
-  - Ultra-fast, lowest cost
+- **`amazon.nova-micro-v1:0`** ⭐
   - Text-only
   - Best for: Simple tasks, high-volume workloads
   
@@ -88,7 +87,7 @@ This document lists all available foundation models in AWS Bedrock (us-east-1 re
 ## 💰 Cost Comparison (Approximate)
 
 ### Economy Tier
-1. **`amazon.nova-micro-v1:0`** - Lowest cost ⭐ You're using this
+1. **`amazon.nova-micro-v1:0`** - Lowest cost
 2. `meta.llama3-2-1b-instruct-v1:0` - Very low cost
 3. `mistral.mistral-7b-instruct-v0:2` - Low cost
 
@@ -109,14 +108,9 @@ This document lists all available foundation models in AWS Bedrock (us-east-1 re
 
 ## 🎯 Model Selection Guide
 
-### Your Current Setup
-```python
-BEDROCK_MODEL_ID='amazon.nova-micro-v1:0'
-```
-
 ### When to Use What
 
-**For Cost Optimization (Your Current Choice)**
+**For Cost Optimization**
 ```python
 BEDROCK_MODEL_ID='amazon.nova-micro-v1:0'  # Lowest cost
 ```
@@ -261,8 +255,5 @@ aws bedrock list-foundation-models --region us-east-1 --by-provider Meta
 - **Cost**: Amazon Nova Micro is the most cost-effective option
 - **Quality**: Anthropic Claude Opus 4 provides the highest quality
 - **Speed**: Haiku models and Nova Micro are the fastest
-- **Role Assumption**: You're currently set up to assume role with external ID
-
-
-You're using the **most cost-effective** model (Nova Micro) with role assumption configured! 🎉
+- **Role Assumption**: set up to assume role with external ID, if required
 
