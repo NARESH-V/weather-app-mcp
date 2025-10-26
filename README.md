@@ -27,9 +27,9 @@ weather-app-mcp/
 │   ├── run_client.py            # Run client demo
 │   └── custom_client.py         # Custom client examples
 ├── tests/                        # Test suite
-│   ├── test_server.py
-│   ├── test_client.py
-│   └── test_integration.py
+│   ├── test_server.py           # Server unit tests
+│   ├── test_client.py           # Client unit tests
+│   └── test_integration.py      # End-to-end integration tests
 ├── requirements.txt              # Python dependencies
 ├── pyproject.toml                # Package configuration
 ├── .gitignore
@@ -189,3 +189,93 @@ You: What's the weather like in London?
 
 🤔 Thinking...
 🤖 Calling tool: get_current_weather with args: {'city': 'london'}
+
+## 🧪 Testing
+
+The project includes a comprehensive test suite to ensure all components work correctly.
+
+### Test Structure
+
+The test suite consists of three main test files:
+
+1. **test_client.py** - Client unit tests
+   - Tests client initialization
+   - Tests error handling when not connected
+
+2. **test_server.py** - Server unit tests
+   - Tests server initialization
+   - Tests weather data structure
+   - Tests request handler registration
+
+3. **test_integration.py** - End-to-end integration tests
+   - Tests full client-server communication
+   - Tests resource listing and reading
+   - Tests tool discovery and execution
+   - Tests prompt listing
+
+### Running the Tests
+
+**Install test dependencies:**
+```bash
+pip install pytest pytest-asyncio
+```
+
+**Run all tests:**
+```bash
+pytest tests/ -v
+```
+
+**Run specific test file:**
+```bash
+pytest tests/test_server.py -v
+pytest tests/test_client.py -v
+pytest tests/test_integration.py -v
+```
+
+**Run with detailed output:**
+```bash
+pytest tests/ -v --tb=short
+```
+
+### Test Results
+
+Expected output when all tests pass:
+```
+============================= test session starts ==============================
+platform darwin -- Python 3.12.8, pytest-8.4.2, pluggy-1.6.0
+rootdir: /Users/naresh/Documents/GitHub/weather-app-mcp
+collected 6 items
+
+tests/test_client.py ..                                                  [ 33%]
+tests/test_integration.py .                                              [ 50%]
+tests/test_server.py ...                                                 [100%]
+
+============================== 6 passed in 0.38s ===============================
+```
+
+### What the Tests Cover
+
+✅ **Client Tests (2 tests)**
+- Client object initialization
+- Error handling for operations before connection
+
+✅ **Server Tests (3 tests)**
+- Server object initialization
+- Weather data structure validation
+- Request handler registration
+
+✅ **Integration Tests (1 test)**
+- Full end-to-end workflow
+- Client-server connection
+- Resource listing and retrieval
+- Tool discovery and execution
+- Prompt discovery
+
+### Continuous Integration
+
+All tests should pass before committing changes. The test suite ensures:
+- ✅ MCP protocol compliance
+- ✅ Client-server communication
+- ✅ Data integrity
+- ✅ Tool execution correctness
+
